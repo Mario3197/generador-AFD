@@ -5,3 +5,6 @@ class Transicion:
 
     def mostrarTransicion(self):
         print(self.caracter, self.estadoSiguiente)
+
+    def getCaracter(self):
+        return self.caracter
