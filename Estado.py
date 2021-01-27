@@ -11,8 +11,29 @@ class Estado(object):
     def estadoExiste(self,nombreEstado):
         return self.nombreEstado == nombreEstado
 
+    def getNombreEstado(self):
+        return self.nombreEstado
+
+    def getEstadoFinal(self):
+        return self.estadoFinal
+
     def insertarTransicion(self, caracter, estadoSiguiente):
         self.transiciones.append(Transicion(caracter, estadoSiguiente))
+
+    def estadoSiguiente(self, caracter):
+        for transicion in self.transiciones:
+            if (transicion.getCaracter() == caracter):
+                return transicion.estadoSiguiente
+
+    def estadoSiguienteMultiples(self, caracter, transicionBuscada):
+        transicionesMismoCaracter = 0
+        for index, transicion in enumerate(self.transiciones):
+            caracterEvaluado = transicion.getCaracter()
+            if (caracterEvaluado == caracter and (index - transicionesMismoCaracter) == transicionBuscada):
+                return transicion.estadoSiguiente
+            else:
+                if (caracterEvaluado == caracter):
+                    transicionesMismoCaracter += 1
 
     def transicionesConElMismoCaracter(self, alfabeto):
         caracteres = []
@@ -25,7 +46,6 @@ class Estado(object):
                 if (elementoAlfabeto == transicion.getCaracter()):
                     caracteres[index]['cantidad'] += 1
         return caracteres
-
 
     def mostrarEstado(self):
         print(self.nombreEstado, self.estadoInicial, self.estadoFinal)
